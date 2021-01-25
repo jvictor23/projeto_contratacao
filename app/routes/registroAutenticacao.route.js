@@ -3,7 +3,7 @@ const router = express.Router();
 const registroAutenticacao = require('../controllers/registroAutenticaco.controller')
 
 //controller
-router.get("/", registroAutenticacao.get);
+router.post("/registro", registroAutenticacao.registro);
 
 
 module.exports = router
