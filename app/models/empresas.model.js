@@ -105,5 +105,13 @@ module.exports={
 
         const data = {id, razao_social, cnpj, email, usuario_id};
         return data;
+    },
+
+    deleteEmpresas: async(id)=>{
+        if(!id){
+            throw new Error("id esta vazio")
+        }
+
+        await repository.deleteEmpresas(id);
     }
 }
