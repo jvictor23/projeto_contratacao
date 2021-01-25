@@ -43,5 +43,23 @@ module.exports={
                 data:null
             })
         }
+    },
+
+    logout: async(req,res)=>{
+        //Destruturando dados
+        const {token} = req.body;
+        try {
+            model.logout(token);
+
+            return res.send({
+                success: true,
+                data: null
+            })
+        } catch (error) {
+            return res.send({
+                success: false,
+                data:null
+            })
+        }
     }
 }
