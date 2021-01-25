@@ -26,5 +26,15 @@ module.exports={
         ])
 
         return rows[0];
+    },
+
+    putEmpresas: async(id, razao_social, cnpj, email, usuario_id)=>{
+        await db.query("UPDATE empresa SET razao_social=$1, cnpj=$2, email=$3, usuario_id=$4 WHERE id = $5",[
+            razao_social,
+            cnpj,
+            email,
+            usuario_id,
+            id
+        ])
     }
 }
