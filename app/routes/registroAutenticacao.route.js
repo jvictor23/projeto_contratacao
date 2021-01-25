@@ -5,6 +5,7 @@ const registroAutenticacao = require('../controllers/registroAutenticaco.control
 //controllers
 //rota de registro
 router.post("/registro", registroAutenticacao.registro);
+router.post("/login",);
 
 
 module.exports = router
