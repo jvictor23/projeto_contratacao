@@ -1,5 +1,7 @@
 const repository = require("../repositories/registroAutenticacao.repository");
 const bcrypt = require("bcrypt");
+const authConfig = require("../helpers/auth.json");
+const jwt = require("jsonwebtoken")
 module.exports = {
     registro: async(nome,email,password)=>{
         //variavel regex
@@ -51,16 +53,34 @@ module.exports = {
             throw new Error("A senha está vazia!")
         }
 
+        //Buscando usuario pelo email
         const usuario = await repository.findUserByEmail(email);
 
+        //verificando se usuario existe
         if(usuario.email == null){
             throw new Error("Usuário nao existe");
         }
 
+        //verificando se a senha que usuario digitou é a mesma que está no banco de dados
         if(!await bcrypt.compare(password,usuario.password)){
             throw new Error("Senha incorreta")
         }
 
+        //gerando token de autenticacao
+       const token = jwt.sign({id: usuario.id}, authConfig.secret,{
+            expiresIn: 86400
+        })
 
+        //buscando token registrado
+        const tokenRegistrado = await repository.findTokenById(usuario.id);
+
+        //se token existe atualiza se nao registra
+        if(tokenRegistrado != null){
+            await repository.updateToken(token);
+        }else{
+            await repository.registerToken(token);
+        }
+
+        return token;
     }
 }
