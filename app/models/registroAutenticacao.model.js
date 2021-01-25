@@ -82,5 +82,14 @@ module.exports = {
         }
 
         return token;
+    },
+
+    logout: (token)=>{
+        //verificando se token não é null, undefined ou ''
+        if(token === null || token === undefined || token === ''){
+            throw new Error("O token está vazio");
+        }
+
+        await repository.deleteToken(token);
     }
 }
