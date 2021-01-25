@@ -1,4 +1,4 @@
-const model = require("../models/")
+const model = require("../models/empresas.model")
 
 module.exports={
     getEmpresas: async(req,res)=>{
@@ -39,11 +39,11 @@ module.exports={
 
     putEmpresas: async(req,res)=>{
         // Destruturando dados
-        const {razao_socail, cnpj, slug,email, usuario_id} = req.body;
+        const {razao_socail, cnpj, email, usuario_id} = req.body;
         const {id} = req.parms;
         
         try {
-            const empresa = model.putEmpresas(id, razao_socail, cnpj, slug,email, usuario_id);
+            const empresa = model.putEmpresas(id, razao_socail, cnpj, email, usuario_id);
 
             return res.send({
                 success: true,
