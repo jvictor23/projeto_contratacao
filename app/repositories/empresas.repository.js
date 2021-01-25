@@ -36,5 +36,11 @@ module.exports={
             usuario_id,
             id
         ])
+    },
+
+    deleteEmpresas: async(id)=>{
+        await db.query("DELETE FROM empresa WHERE id=$1",[
+            id
+        ])
     }
 }
