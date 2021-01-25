@@ -7,32 +7,51 @@ module.exports={
             const empresas = await model.getEmpresas();
             
             return res.send({
-                succes: true,
+                success: true,
                 data: empresas
             })
         } catch (error) {
             return res.send({
-                succes: false,
+                success: false,
                 data: null
             })
         }
     },
 
     postEmpresas: async(req,res)=>{
+         // Destruturando dados
+         const {razao_socail, cnpj, slug,email, usuario_id} = req.body;
         try {
-            // Destruturando dados
-            const {razao_socail, cnpj, slug,email, usuario_id} = req.body;
-
             //enviando e recebendo informacoes do model
             const empresa = model.postEmpresas(razao_socail, cnpj,slug,email, usuario_id);
 
             return res.send({
-                succes: true,
+                success: true,
                 data: empresa
             })
         } catch (error) {
             return res.send({
-                succes: false,
+                success: false,
+                data: null
+            })
+        }
+    },
+
+    putEmpresas: async(req,res)=>{
+        // Destruturando dados
+        const {razao_socail, cnpj, slug,email, usuario_id} = req.body;
+        const {id} = req.parms;
+        
+        try {
+            const empresa = model.putEmpresas(id, razao_socail, cnpj, slug,email, usuario_id);
+
+            return res.send({
+                success: true,
+                data: empresa
+            })
+        } catch (error) {
+            return res.send({
+                success: false,
                 data: null
             })
         }
