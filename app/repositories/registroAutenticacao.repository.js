@@ -43,5 +43,11 @@ module.exports ={
             token,
             usuario_id
         ]);
+    },
+
+    deleteToken: async(token)=>{
+        await db.query("DELETE FROM tokens WHERE token=$1",[
+            token
+        ])
     }
 }

@@ -49,7 +49,7 @@ module.exports={
         //Destruturando dados
         const {token} = req.body;
         try {
-            model.logout(token);
+           await model.logout(token);
 
             return res.send({
                 success: true,
