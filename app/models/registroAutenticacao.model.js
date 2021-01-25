@@ -12,7 +12,7 @@ module.exports = {
 
             //verificando se email não é null, undefined ou ''
             if(email === null || email === undefined || nome === ''){
-                throw new Error("O email está vazio");7
+                throw new Error("O email está vazio");
                 
             }
 
@@ -36,6 +36,32 @@ module.exports = {
             const usuario = await repository.registro(nome, email, password);
 
             return usuario;
+
+    },
+
+    login: async(email,password)=>{
+          //verificando se email não é null, undefined ou ''
+          if(email === null || email === undefined || nome === ''){
+            throw new Error("O email está vazio");
+            
+        }
+
+        //verificando se password não é null, undefined ou ''
+        if(password === null || password === undefined || password === ''){
+            throw new Error("A senha está vazia!")
+        }
+
+        const usuario = await repository.findUserByEmail(email);
+
+        if(usuario.email == null){
+            throw new Error("Usuário nao existe");
+        }
+
+        if(!await bcrypt.compare(password,usuario.password)){
+            throw new Error("Senha incorreta")
+        }
+
+        
 
     }
 }
