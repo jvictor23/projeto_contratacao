@@ -10,7 +10,7 @@ module.exports ={
             password
         ]);
         //recuperando ultima insercao de dados no banco de dados
-        const {rows} = await db.query("SELECT id,nome,email FROM usuario ORDER BY id desc limit 1");
+        const {rows} = await db.query("SELECT id FROM usuario ORDER BY id desc limit 1");
 
         return rows[0];
     },
