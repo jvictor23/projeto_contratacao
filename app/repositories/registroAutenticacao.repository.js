@@ -21,5 +21,27 @@ module.exports ={
         ]);
 
         return rows[0];
+    },
+
+    findTokenById: async(id)=>{
+        const {rows} = await db.query("SELECT * FROM tokens WHERE usuario_id=$1",[
+            id
+        ]);
+
+        return rows[0];
+    },
+
+    updateToken: async(token, usuario_id)=>{
+        await db.query("UPDATE tokens SET token=$1 WHERE usuario_id=$2",[
+            token,
+            usuario_id
+        ])
+    },
+
+    registerToken: async(token, usuario_id)=>{
+        await db.query("INSERT INTO tokens(token, usuario_id) VALUES ($1,$2)",[
+            token,
+            usuario_id
+        ]);
     }
 }

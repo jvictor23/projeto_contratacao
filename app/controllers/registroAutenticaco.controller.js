@@ -28,15 +28,16 @@ module.exports={
         const{email,password} = req.body;
         try {
             //enviando dados para o model e recebendo seu retorno
-            const usuario = await model.login(email,senha);
+            const token = await model.login(email,password);
             //retornando token caso nao haja erro
-            return res.sen({
+            return res.send({
                 success: true,
                 data:null,
-                token: usuario.token
+                token: token
             })
         } catch (error) {
             //retornando null caso haja erro
+            console.log(error)
             return res.send({
                 success: false,
                 data:null

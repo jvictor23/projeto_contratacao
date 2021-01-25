@@ -13,7 +13,7 @@ module.exports = {
             }
 
             //verificando se email não é null, undefined ou ''
-            if(email === null || email === undefined || nome === ''){
+            if(email === null || email === undefined || email === ''){
                 throw new Error("O email está vazio");
                 
             }
@@ -43,7 +43,7 @@ module.exports = {
 
     login: async(email,password)=>{
           //verificando se email não é null, undefined ou ''
-          if(email === null || email === undefined || nome === ''){
+          if(email === null || email === undefined || email === ''){
             throw new Error("O email está vazio");
             
         }
@@ -76,9 +76,9 @@ module.exports = {
 
         //se token existe atualiza se nao registra
         if(tokenRegistrado != null){
-            await repository.updateToken(token);
+            await repository.updateToken(token, usuario.id);
         }else{
-            await repository.registerToken(token);
+            await repository.registerToken(token, usuario.id);
         }
 
         return token;
