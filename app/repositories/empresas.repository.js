@@ -45,7 +45,7 @@ module.exports={
     deleteEmpresas: async(id)=>{
         await db.query("DELETE FROM empresa WHERE id=$1",[
             id
-        ])
+        ]);
     },
 
     //buscando usuario_id pelo token

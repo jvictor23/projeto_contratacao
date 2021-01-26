@@ -70,7 +70,8 @@ module.exports={
     },
 
     deleteEmpresas: async(req,res)=>{
-        const {id} = req.params;
+        //id do paramentro da rota
+        const id = req.params.id;
 
         try {
             await model.deleteEmpresas(id);
