@@ -3,9 +3,11 @@ const validator = require('cpf-cnpj-validator');
 const e = require("express");
 
 module.exports={
-    getEmpresas: async()=>{
+    getEmpresas: async(token)=>{
+        const {usuario_id} = await repository.findUserByToken(token);
+        console.log(token)
         //recebendo informações do repository
-        const empresas = await repository.getEmpresas();
+        const empresas = await repository.getEmpresas(usuario_id);
         return empresas;
     },
 

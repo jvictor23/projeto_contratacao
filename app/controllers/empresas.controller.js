@@ -2,9 +2,13 @@ const model = require("../models/empresas.model")
 
 module.exports={
     getEmpresas: async(req,res)=>{
+        //pegando token do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
         try {
             //buscando empresas no banco de dados
-            const empresas = await model.getEmpresas();
+            const empresas = await model.getEmpresas(token[1]);
             
             return res.send({
                 success: true,
@@ -20,7 +24,8 @@ module.exports={
 
     postEmpresas: async(req,res)=>{
          // Destruturando dados
-         const {razao_social, cnpj, slug,email, token} = req.body;
+         const {razao_social, cnpj, slug,email} = req.body;
+         const token = req.headers.authorization;
         try {
             //enviando e recebendo informacoes do model
             const empresa = model.postEmpresas(razao_social, cnpj,slug,email, token);

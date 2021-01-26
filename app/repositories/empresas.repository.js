@@ -1,7 +1,9 @@
 const db = require("../helpers/database");
 module.exports={
-    getEmpresas: async()=>{
-        const {rows} = await db.query("SELECT * FROM empresa");
+    getEmpresas: async(usuario_id)=>{
+        const {rows} = await db.query("SELECT * FROM empresa WHERE usuario_id=$1",[
+            usuario_id
+        ]);
 
         return rows;
     },
