@@ -57,9 +57,9 @@ module.exports={
         }
 
         //enviando dados ao repository para criacao de empresa
-        const empresa = await repository.postEmpresas(razao_social, cnpj, slug,email, usuario_id);
+        const empresaCriada = await repository.postEmpresas(razao_social, cnpj, slug,email, usuario_id);
 
-        const id = empresa.id;
+        const id = empresaCriada.id;
 
         const data = {id,razao_social, cnpj, slug,email, usuario_id};
 

@@ -15,6 +15,7 @@ module.exports={
                data: usuario
            })
         } catch (error) {
+            console.log(error)
             //retornando null caso haja erro
             return res.send({
                 success: false,
