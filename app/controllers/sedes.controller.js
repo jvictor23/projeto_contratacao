@@ -51,17 +51,24 @@ module.exports={
     },
 
     putSedes: async(req,res)=>{
-        const {cnpj, endereco, usuario_id} = req.body;
+        //Destruturando dados
+        const {cnpj, endereco} = req.body;
         const {empresa_id, sede_id} = req.params;
 
+        //Pegando authToken do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
+        
         try {
-            const sede = await model.putSedes(sede_id,cnpj,endereco,empresa_id,usuario_id);
+            const sede = await model.putSedes(sede_id,cnpj,endereco,empresa_id,token[1]);
 
             return res.send({
                 success: true,
                 data: sede
             })
         } catch (error) {
+            console.log(error)
             return res.send({
                 success: false,
                 data: null

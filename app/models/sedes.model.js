@@ -46,11 +46,11 @@ module.exports={
         return data;
     },
 
-    putSedes: async(id,cnpj, endereco, empresa_id, usuario_id)=>{
+    putSedes: async(sede_id,cnpj, endereco, empresa_id, token)=>{
 
-        //verificando se id não é null, undefined ou ''
-        if(id === null || id === undefined || id === ''){
-            throw new Error("id está vazio");
+        //verificando se sede_id não é null, undefined ou ''
+        if(sede_id === null || sede_id === undefined || sede_id === ''){
+            throw new Error("sede_id está vazio");
         }
 
         //verificando se cnpj não é null, undefined ou ''
@@ -73,9 +73,13 @@ module.exports={
             throw new Error("empresa_id está vazio");
         }
 
-        await repository.putSedes(id,cnpj,endereco,empresa_id,usuario_id);
+        //buscando usuario_id pelo token
+        const {usuario_id} = await repository.findUserByToken(token);
 
-        const data ={id,cnpj,endereco,empresa_id,usuario_id};
+
+        await repository.putSedes(sede_id,cnpj,endereco,empresa_id,usuario_id);
+
+        const data ={sede_id,cnpj,endereco,empresa_id,usuario_id};
 
         return data;
     },

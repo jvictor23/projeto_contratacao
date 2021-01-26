@@ -26,12 +26,11 @@ module.exports={
         return rows[0];
     },
     
-    putSedes: async(id,cnpj, endereco, empresa_id, usuario_id)=>{
-        await db.query("UPDATE sede SET cnpj=$1, endereco=$2, usuario_id=$4 WHERE id=$5 AND empresa_id = $6",[
+    putSedes: async(sede_id,cnpj, endereco, empresa_id)=>{
+        await db.query("UPDATE sede SET cnpj=$1, endereco=$2 WHERE id=$3 AND empresa_id = $4",[
             cnpj,
             endereco,
-            usuario_id,
-            id,
+            sede_id,
             empresa_id
         ]);
     },
