@@ -41,11 +41,13 @@ module.exports={
         ]);
     },
 
-    deleteUsuarios: async(empresa_id, usuario_id)=>{
+    //user_id é o id do dono
+    deleteUsuarios: async(empresa_id, usuario_id, user_id)=>{
         //deltando dados no banco de dados
-        await db.query("DELETE FROM usuario WHERE empresa_id =$1 AND usuario_id=$2",[
+        await db.query("DELETE FROM usuario WHERE empresa_id =$1 AND id=$2 AND usuario_id=$3",[
             empresa_id,
-            usuario_id
+            usuario_id,
+            user_id
         ]);
     },
 

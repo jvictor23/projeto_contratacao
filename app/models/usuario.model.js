@@ -114,12 +114,12 @@ module.exports={
          await repository.putUsuarios(nome,email,password,empresa_id,usuario_id, usuarioDono);
 
          //criando objeto de dados ja existente
-         const data = {nome,email,empresa_id,id:usuario_id, usuario_id:usuarioDono};
+         const data = {id:usuario_id,nome,email,empresa_id};
 
          return data;
     },
 
-    deleteUsuarios: async(empresa_id, usuario_id)=>{
+    deleteUsuarios: async(empresa_id, usuario_id, token)=>{
         //verificando se empresa_id não é null, undefined ou ''
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
             throw new Error("empresa_id está vazio");
@@ -130,7 +130,10 @@ module.exports={
             throw new Error("usuario_id está vazio");
         }
 
+        const usuario = await repository.findUserByToken(token);
+        const user_id = usuario.usuario_id;
+
         //enviando dados ao repository
-        await repository.deleteUsuarios(empresa_id, usuario_id);
+        await repository.deleteUsuarios(empresa_id, usuario_id,user_id);
     }
 }
