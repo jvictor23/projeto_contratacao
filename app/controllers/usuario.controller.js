@@ -69,5 +69,24 @@ module.exports={
                 data: null
             })
         }
+    },
+
+    deleteUsuarios: async(req,res)=>{
+        const {empresa_id, usuario_id} = req.params;
+
+        try {
+            await model.deleteUsuarios(empresa_id,usuario_id);
+
+            return res.send({
+                success:true,
+                data:null
+            })
+        } catch (error) {
+            //retornando false e null caso haja erro
+            return res.send({
+                success: false,
+                data: null
+            })
+        }
     }
 }
