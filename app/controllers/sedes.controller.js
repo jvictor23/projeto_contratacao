@@ -54,5 +54,21 @@ module.exports={
                 data: null
             })
         }
+    },
+
+    deleteSedes: async(req,res)=>{
+        const {empresa_id, sede_id} = req.params;
+        try {
+            await model.deleteSedes(empresa_id,sede_id);
+            return res.send({
+                success: true,
+                data: null
+            })
+        } catch (error) {
+            return res.send({
+                success: false,
+                data: null
+            })
+        }
     }
 }
