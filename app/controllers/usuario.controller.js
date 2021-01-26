@@ -26,13 +26,18 @@ module.exports={
 
     postUsuarios: async(req,res)=>{
         // Destruturando dados
-        const {nome,email,password, id_dono} = req.body;
+        const {nome,email,password} = req.body;
         const {empresa_id} = req.params;
+
+          //Pegando authToken do header
+          const authToken = req.headers.authorization;
+          //dividindo o token em duas partes [Bearer,Token]
+          const token = authToken.split(' ');
 
         try {
 
             //enviando e recebendo dados do model
-            const usuario = await model.postUsuarios(nome,email,password,empresa_id,id_dono);
+            const usuario = await model.postUsuarios(nome,email,password,empresa_id,token[1]);
 
             //retornado {} de usuario
             return res.send({

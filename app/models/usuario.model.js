@@ -12,7 +12,7 @@ module.exports={
         return usuario;
     },
 
-    postUsuarios: async(nome,email,password,empresa_id,usuario_id)=>{
+    postUsuarios: async(nome,email,password,empresa_id,token)=>{
         //regex para validacao de email
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
@@ -42,8 +42,10 @@ module.exports={
             throw new Error("empresa_id está vazio");
         }
 
+        const {usuario_id} = await repository.findUserByToken(token);
+
         //enviando e recebendo dados do repository
-        const id = repository.postUsuarios(nome,email,password,empresa_id,usuario_id);
+        const {id} = repository.postUsuarios(nome,email,password,empresa_id,usuario_id);
 
         //adicionando id aos dados ja existente
         const data={id,nome,email,password,empresa_id,usuario_id};
