@@ -25,10 +25,13 @@ module.exports={
     postEmpresas: async(req,res)=>{
          // Destruturando dados
          const {razao_social, cnpj, slug,email} = req.body;
-         const token = req.headers.authorization;
+         //pegando token do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
         try {
             //enviando e recebendo informacoes do model
-            const empresa = model.postEmpresas(razao_social, cnpj,slug,email, token);
+            const empresa = model.postEmpresas(razao_social, cnpj,slug,email, token[1]);
             return res.send({
                 success: true,
                 data: empresa
@@ -43,11 +46,16 @@ module.exports={
 
     putEmpresas: async(req,res)=>{
         // Destruturando dados
-        const {razao_socail, cnpj, email, usuario_id} = req.body;
-        const {id} = req.parms;
-        
+        const {razao_social, cnpj, slug, email} = req.body;
+        //pegando token do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
+        //id do paramentro da rota
+        const id = req.params.id;
+    
         try {
-            const empresa = model.putEmpresas(id, razao_socail, cnpj, email, usuario_id);
+            const empresa = await model.putEmpresas(id, razao_social, cnpj, slug, email, token[1]);
 
             return res.send({
                 success: true,

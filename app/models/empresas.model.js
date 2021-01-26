@@ -1,11 +1,9 @@
 const repository = require("../repositories/empresas.repository");
 const validator = require('cpf-cnpj-validator');
-const e = require("express");
 
 module.exports={
     getEmpresas: async(token)=>{
         const {usuario_id} = await repository.findUserByToken(token);
-        console.log(token)
         //recebendo informações do repository
         const empresas = await repository.getEmpresas(usuario_id);
         return empresas;
@@ -73,7 +71,8 @@ module.exports={
 
     },
 
-    putEmpresas: async(id, razao_social, cnpj, email, usuario_id)=>{
+    putEmpresas: async(id, razao_social, cnpj, slug, email, token)=>{
+        
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
         //verificando se razao_social não é null, undefined ou ''
@@ -91,6 +90,11 @@ module.exports={
             throw new Error("CNPJ é inválido")
         }
 
+        //verificando se slug não é null, undefined ou ''
+        if(slug === null || slug === undefined || slug === ''){
+            throw new Error("slug está vazio");
+        }
+
         //verificando se email não é null, undefined ou ''
         if(email === null || email === undefined || email === ''){
             throw new Error("email está vazio");
@@ -102,14 +106,12 @@ module.exports={
             throw new Error("O email é inválido")
         }
 
-        //verificando se usuario_id não é null, undefined ou ''
-        if(usuario_id === null || usuario_id === undefined || usuario_id === ''){
-            throw new Error("usuario_id está vazio");
-        }
+        //buscando usuario_id pelo token
+       const {usuario_id} = await repository.findUserByToken(token);
 
-        await repository.putEmpresas(id, razao_social, cnpj, email, usuario_id);
+        await repository.putEmpresas(id, razao_social, cnpj, slug, email, usuario_id);
 
-        const data = {id, razao_social, cnpj, email, usuario_id};
+        const data = {id, razao_social, cnpj, slug, email, usuario_id};
         return data;
     },
 

@@ -30,13 +30,15 @@ module.exports={
         return rows[0];
     },
 
-    putEmpresas: async(id, razao_social, cnpj, email, usuario_id)=>{
-        await db.query("UPDATE empresa SET razao_social=$1, cnpj=$2, email=$3, usuario_id=$4 WHERE id = $5",[
+    putEmpresas: async(id, razao_social, cnpj, slug, email, usuario_id)=>{
+
+        await db.query("UPDATE empresa SET razao_social=$1, cnpj=$2, slug=$3, email=$4 WHERE id = $5 AND usuario_id=$6",[
             razao_social,
             cnpj,
+            slug,
             email,
+            id,
             usuario_id,
-            id
         ])
     },
 
