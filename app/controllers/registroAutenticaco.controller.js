@@ -19,7 +19,7 @@ module.exports={
             //retornando null caso haja erro
             return res.send({
                 success: false,
-                data: null
+                data: null,
             })
         }
     },

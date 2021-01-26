@@ -24,6 +24,11 @@ module.exports = {
                 throw new Error("O email é inválido")
             }
 
+            const existsUser = await repository.findUserByEmail(email);
+            if(existsUser){
+                throw new Error("Email já existe");
+            }
+
             //verificando se password não é null, undefined ou ''
             if(password === null || password === undefined || password === ''){
                 throw new Error("A senha está vazia!")
@@ -36,8 +41,9 @@ module.exports = {
 
             //enviando dados ao repository
             const usuario = await repository.registro(nome, email, password);
-
-            return usuario;
+            const id = usuario.id;
+            const data = {id,nome,email}
+            return data;
 
     },
 
