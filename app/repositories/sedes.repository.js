@@ -11,6 +11,7 @@ module.exports={
     },
 
     postSedes: async(cnpj, endereco, empresa_id, usuario_id)=>{
+        
         await db.query("INSERT INTO sede (cnpj,endereco,empresa_id,usuario_id) VALUES ($1,$2,$3,$4)",[
             cnpj,
             endereco,
@@ -38,5 +39,14 @@ module.exports={
             empresa_id,
             sede_id
         ])
+    },
+
+    //buscando usuario_id pelo token
+    findUserByToken: async(token)=>{
+        const {rows} = await db.query("SELECT usuario_id FROM tokens WHERE token=$1",[
+            token
+        ]);
+
+        return rows[0];
     }
 }

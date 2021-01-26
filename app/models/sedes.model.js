@@ -1,4 +1,5 @@
-const repository = require("../repositories/sedes.repository")
+const repository = require("../repositories/sedes.repository");
+const validator = require('cpf-cnpj-validator');
 
 module.exports={
     getSedes: async(empresa_id)=>{
@@ -11,7 +12,8 @@ module.exports={
         return empresas;
     },
 
-    postSedes: async(cnpj, endereco, empresa_id, usuario_id)=>{
+    postSedes: async(cnpj, endereco, empresa_id, token)=>{
+        
         //verificando se cnpj não é null, undefined ou ''
         if(cnpj === null || cnpj === undefined || cnpj === ''){
             throw new Error("CNJP está vazio");
@@ -31,6 +33,8 @@ module.exports={
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
             throw new Error("empresa_id está vazio");
         }
+
+        const {usuario_id} = await repository.findUserByToken(token);
 
         const id = await repository.postSedes(cnpj,endereco,empresa_id,usuario_id);
 

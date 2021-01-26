@@ -19,17 +19,24 @@ module.exports={
     },
 
     postSedes: async(req,res)=>{
-        const {cnpj, endereco, usuario_id} = req.body;
-        const {empresa_id} = req.params;
+        // Destruturando dados
+        const {cnpj, endereco} = req.body;
+        //Pegando empresa_id do parametro da rota
+        const empresa_id = req.params.empresa_id;
+        //Pegando authToken do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
 
         try {
-            const sede = await model.postSedes(cnpj,endereco,empresa_id,usuario_id);
+            const sede = await model.postSedes(cnpj,endereco,empresa_id,token[1]);
 
             return res.send({
                 success: true,
                 data: sede
             })
         } catch (error) {
+            console.log(error)
             return res.send({
                 success: false,
                 data: null
