@@ -36,5 +36,13 @@ module.exports={
             empresa_id,
             usuario_id
         ]);
+    },
+
+    deleteUsuarios: async(empresa_id, usuario_id)=>{
+        //deltando dados no banco de dados
+        await db.query("DELETE FROM usuario WHERE empresa_id =$1 AND usuario_id=$2",[
+            empresa_id,
+            usuario_id
+        ]);
     }
 }
