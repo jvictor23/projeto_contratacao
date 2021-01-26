@@ -31,7 +31,7 @@ module.exports={
         const token = authToken.split(' ');
         try {
             //enviando e recebendo informacoes do model
-            const empresa = model.postEmpresas(razao_social, cnpj,slug,email, token[1]);
+            const empresa = await model.postEmpresas(razao_social, cnpj,slug,email, token[1]);
             return res.send({
                 success: true,
                 data: empresa

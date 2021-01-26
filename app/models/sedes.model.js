@@ -38,7 +38,7 @@ module.exports={
 
         const {usuario_id} = await repository.findUserByToken(token);
 
-        const id = await repository.postSedes(cnpj,endereco,empresa_id,usuario_id);
+        const {id} = await repository.postSedes(cnpj,endereco,empresa_id,usuario_id);
 
         //retornando dados com o id
         const data = {id,cnpj,endereco,empresa_id,usuario_id};
