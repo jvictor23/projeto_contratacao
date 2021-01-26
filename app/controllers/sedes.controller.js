@@ -3,14 +3,20 @@ const model = require("../models/sedes.model")
 module.exports={
     getSedes: async(req,res)=>{
         const {empresa_id} = req.params;
+         //Pegando authToken do header
+         const authToken = req.headers.authorization;
+         //dividindo o token em duas partes [Bearer,Token]
+         const token = authToken.split(' ');
+
         try {
-            const empresas = model.getSedes(empresa_id);
+            const sedes = await model.getSedes(empresa_id,token[1]);
 
             return res.send({
                 success: true,
-                data: empresas
+                data: sedes
             })
         } catch (error) {
+            console.log(error)
             return res.send({
                 success: false,
                 data: null

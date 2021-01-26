@@ -2,11 +2,13 @@ const db = require("../helpers/database");
 
 module.exports={
     //buscando sede com o id da empresa
-    getSedes: async(empresa_id)=>{
-        const {rows} = await db.query("SELECT * FROM sede WHERE empresa_id = $1",[
-            empresa_id
+    getSedes: async(empresa_id, usuario_id)=>{
+        
+        const {rows} = await db.query("SELECT * FROM sede WHERE empresa_id = $1 AND usuario_id=$2",[
+            empresa_id,
+            usuario_id
         ]);
-
+        
         return rows;
     },
 
@@ -46,7 +48,7 @@ module.exports={
         const {rows} = await db.query("SELECT usuario_id FROM tokens WHERE token=$1",[
             token
         ]);
-
+        
         return rows[0];
     }
 }
