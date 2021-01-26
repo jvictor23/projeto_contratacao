@@ -88,5 +88,20 @@ module.exports={
          const data = {nome,email,password,empresa_id,usuario_id};
 
          return data;
+    },
+
+    deleteUsuarios: async(empresa_id, usuario_id)=>{
+        //verificando se empresa_id não é null, undefined ou ''
+        if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
+            throw new Error("empresa_id está vazio");
+        }
+
+        //verificando se usuario_id não é null, undefined ou ''
+        if(usuario_id === null || usuario_id === undefined || usuario_id === ''){
+            throw new Error("usuario_id está vazio");
+        }
+
+        //enviando dados ao repository
+        await repository.deleteUsuarios(empresa_id, usuario_id);
     }
 }
