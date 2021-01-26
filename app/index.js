@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 //importacao das rotas
 const registroAutenticacao = require('./routes/registroAutenticacao.route');
 const empresas=require("../app/routes/empresa.route");
-const sedes = require("../app/routes/sedes.route")
+const sedes = require("../app/routes/sedes.route");
 
 /*Ŕecebendo a instancia da aplicaçao express*/
 const app = express();
