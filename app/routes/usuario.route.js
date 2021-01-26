@@ -6,6 +6,7 @@ const controller = require("../controllers/usuario.controller");
 router.get("/usuarios/:empresa_id", controller.getUsuarios);
 router.post("/usuarios/:empresa_id",controller.postUsuarios);
 router.put("/usuarios/:empresa_id/:usuario_id", controller.putUsuarios);
+router.delete("/usuarios/:empresa_id/:usuario_id",controller.deleteUsuarios);
 
 
 module.exports = router;
