@@ -84,7 +84,7 @@ module.exports={
         return data;
     },
 
-    deleteSedes: async(empresa_id, sede_id)=>{
+    deleteSedes: async(empresa_id, sede_id, token)=>{
 
         //verificando se empresa_id não é null, undefined ou ''
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
@@ -96,6 +96,8 @@ module.exports={
             throw new Error("sede_id está vazio");
         }
 
-        await repository.deleteSedes(empresa_id, sede_id);
+        const {usuario_id} = await repository.findUserByToken(token);
+
+        await repository.deleteSedes(empresa_id, sede_id, usuario_id);
     }
 }

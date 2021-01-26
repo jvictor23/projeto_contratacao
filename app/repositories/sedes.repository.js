@@ -35,10 +35,11 @@ module.exports={
         ]);
     },
 
-    deleteSedes: async(empresa_id,sede_id)=>{
-        await db.query("DELETE FROM sede WHERE empresa_id = $1 AND sede_id=$2",[
+    deleteSedes: async(empresa_id,sede_id, usuario_id)=>{
+        await db.query("DELETE FROM sede WHERE empresa_id = $1 AND id=$2 AND usuario_id=$3",[
             empresa_id,
-            sede_id
+            sede_id,
+            usuario_id
         ])
     },
 
