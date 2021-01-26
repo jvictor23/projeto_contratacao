@@ -1,4 +1,4 @@
-const repository = require("../repositories/sede.repository")
+const repository = require("../repositories/sedes.repository")
 
 module.exports={
     getSedes: async(empresa_id)=>{
