@@ -25,5 +25,16 @@ module.exports={
         const {rows} = await db.query("SELECT id FROM usuario ORDER BY id desc limit 1")
 
         return rows[0];
+    },
+
+    putUsuarios: async(nome,email,password, empresa_id, usuario_id)=>{
+        //atualizando dados no banco de dados
+        await db.query("UPDATE usuario SET nome=$1, email=$2, password=$3 WHERE empresa_id=$4 AND usuario_id=$5",[
+            nome,
+            email,
+            password,
+            empresa_id,
+            usuario_id
+        ]);
     }
 }
