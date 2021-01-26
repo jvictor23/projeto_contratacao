@@ -5,5 +5,6 @@ const controller = require("../controllers/sedes.controller");
 //rotas
 router.get("/sedes/:empresa_id",controller.getSedes);
 router.post("/sedes/:empresa_id", controller.postSedes);
+router.put("/sedes/:empresa_id/:sede_id", controller.putSedes);
 
 module.exports = router;
