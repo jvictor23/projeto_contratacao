@@ -8,5 +8,18 @@ module.exports={
         ]);
 
         return rows;
+    },
+
+    postSedes: async(cnpj, endereco, empresa_id, usuario_id)=>{
+        await db.query("INSERT INTO sede (cnpj,endereco,empresa_id,usuario_id) VALUES ($1,$2,$3,$4)",[
+            cnpj,
+            endereco,
+            empresa_id,
+            usuario_id
+        ])
+
+        const {rows} = await db.query("SELECT id FROM sede ORDER BY id desc limit 1");
+
+        return rows[0];
     }
 }
