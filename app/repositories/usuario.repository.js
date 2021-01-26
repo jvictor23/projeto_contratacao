@@ -2,18 +2,20 @@ const db = require("../helpers/database");
 
 module.exports={
     //listar usuarios da empresa_id
-    getUsuarios: async(empresa_id)=>{
+    getUsuarios: async(empresa_id, usuario_id)=>{
         //buscando dados do banco de dados
-        const {rows} = await db.query("SELECT * FROM usuario WHERE empresa_id = $1",[
+        const {rows} = await db.query("SELECT * FROM usuario WHERE empresa_id = $1 AND usuario_id=$2",[
             empresa_id,
+            usuario_id
         ]);
-
+        console.log(rows)
         return rows;
     },
 
     postUsuarios: async(nome,email,password,empresa_id,usuario_id)=>{
+        console.log(nome,email,password,empresa_id,usuario_id)
         //inserindo dados ao banco de dados
-        await db.query("INSERT INTO usuario(nome,email,password,empresa_id,usuario_id) VALUES ($1,$2,$3,$4,$5",[
+        await db.query("INSERT INTO usuario(nome,email,password,empresa_id,usuario_id) VALUES ($1,$2,$3,$4,$5)",[
             nome,
             email,
             password,
@@ -53,5 +55,13 @@ module.exports={
         ]);
         
         return rows[0];
-    }
+    },
+
+    findUserByEmail: async(email)=>{
+        const {rows} = await db.query("SELECT * FROM usuario WHERE email=$1",[
+            email
+        ]);
+
+        return rows[0];
+    },
 }

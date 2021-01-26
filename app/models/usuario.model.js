@@ -1,13 +1,16 @@
 const repository = require("../repositories/usuario.repository");
-
+const bcrypt = require("bcrypt");
 module.exports={
-    getUsuarios: async(empresa_id)=>{
+    getUsuarios: async(empresa_id, token)=>{
         //verificando se empresa_id não é null, undefined ou ''
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
             throw new Error("empresa_id está vazio");
         }
+
+        const {usuario_id} = await repository.findUserByToken(token);
+
         //enviando e rebendo dados do repository
-        const usuario = await repository.getUsuarios(empresa_id);
+        const usuario = await repository.getUsuarios(empresa_id, usuario_id);
 
         return usuario;
     },
@@ -26,6 +29,11 @@ module.exports={
             throw new Error("email está vazio");
         }
 
+        const existsUser = await repository.findUserByEmail(email);
+            if(existsUser){
+                throw new Error("Email já existe");
+            }
+
          //verificando se email é valido com o regex
          if(!reg.test(email)){
             console.log("O email é inválido")
@@ -36,6 +44,11 @@ module.exports={
         if(password === null || password === undefined || password === ''){
             throw new Error("password está vazio");
         }
+
+        //criando hash com password
+        const hash = await bcrypt.hash(password,10);
+
+        password = hash;
 
         //verificando se empresa_id não é null, undefined ou ''
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
@@ -48,7 +61,7 @@ module.exports={
         const {id} = repository.postUsuarios(nome,email,password,empresa_id,usuario_id);
 
         //adicionando id aos dados ja existente
-        const data={id,nome,email,password,empresa_id,usuario_id};
+        const data={id,nome,email,empresa_id,usuario_id};
 
         return data;
     },

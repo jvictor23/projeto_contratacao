@@ -4,10 +4,16 @@ module.exports={
     getUsuarios: async(req,res)=>{
         // Destruturando dados
         const {empresa_id} = req.params;
+
+        //Pegando authToken do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
+
         try {
 
             //enviando e recebendo dados do model
-            const usuarios = await model.getUsuarios(empresa_id);
+            const usuarios = await model.getUsuarios(empresa_id, token[1]);
 
             //retornando [] de usuarios
             return res.send({
