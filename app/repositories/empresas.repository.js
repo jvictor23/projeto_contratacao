@@ -7,13 +7,13 @@ module.exports={
     },
 
     postEmpresas: async(razao_social, cnpj, slug,email, usuario_id)=>{
-        await db.query("INTER INTO empresa(razao_social, cnpj, slug, email, usuario_id)",[
+        await db.query("INSERT INTO empresa(razao_social, cnpj, slug, email, usuario_id) VALUES ($1,$2,$3,$4,$5)",[
             razao_social,
             cnpj,
             slug,
             email,
             usuario_id
-        ])
+        ]);
 
         const {rows} = await db.query("SELECT id FROM empresa ORDER BY id desc limit 1");
 
@@ -21,7 +21,7 @@ module.exports={
     },
 
     findBySlug: async(slug)=>{
-        const {rows} = db.query("SELECT * FROM empresa WHERE slug=$1",[
+        const {rows} = await db.query("SELECT * FROM empresa WHERE slug=$1",[
             slug
         ])
 

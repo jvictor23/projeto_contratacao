@@ -25,6 +25,8 @@ module.exports={
         //verificando se cnpj é invalido
         if(!validator.cnpj.isValid(cnpj)){
             throw new Error("CNPJ é inválido")
+        }else{
+            cnpj = validator.cnpj.format(cnpj);
         }
 
         //verificando se slug não é null, undefined ou ''
@@ -57,8 +59,8 @@ module.exports={
         }
 
         //enviando dados ao repository para criacao de empresa
-        const usuario_id = await repository.findUserByToken(token);
-
+        const {usuario_id} = await repository.findUserByToken(token);
+        
         const empresaCriada = await repository.postEmpresas(razao_social, cnpj, slug,email, usuario_id);
 
         const id = empresaCriada.id;
