@@ -29,14 +29,15 @@ module.exports={
         return rows[0];
     },
 
-    putUsuarios: async(nome,email,password, empresa_id, usuario_id)=>{
+    putUsuarios: async(nome,email,password, empresa_id, usuario_id, usuarioDono)=>{
         //atualizando dados no banco de dados
-        await db.query("UPDATE usuario SET nome=$1, email=$2, password=$3 WHERE empresa_id=$4 AND usuario_id=$5",[
+        await db.query("UPDATE usuario SET nome=$1, email=$2, password=$3 WHERE id=$4 AND empresa_id=$5 AND usuario_id=$6",[
             nome,
             email,
             password,
+            usuario_id,
             empresa_id,
-            usuario_id
+            usuarioDono
         ]);
     },
 

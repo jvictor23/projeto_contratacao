@@ -64,9 +64,14 @@ module.exports={
         const {nome,email,password} = req.body;
         const {empresa_id, usuario_id} = req.params;
 
+        //Pegando authToken do header
+        const authToken = req.headers.authorization;
+        //dividindo o token em duas partes [Bearer,Token]
+        const token = authToken.split(' ');
+
         try {
             //enviando e recebendo dados do model
-            const usuario = model.putUsuarios(nome,email,password,empresa_id,usuario_id);
+            const usuario = await model.putUsuarios(nome,email,password,empresa_id,usuario_id, token[1]);
 
             //retornado {} de usuario
             return res.send({
@@ -74,6 +79,7 @@ module.exports={
                 data: usuario
             })
         } catch (error) {
+            console.log(error)
             //retornando false e null caso haja erro
             return res.send({
                 success: false,

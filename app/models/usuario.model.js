@@ -66,7 +66,7 @@ module.exports={
         return data;
     },
 
-    putUsuarios: async(nome,email,password, empresa_id, usuario_id)=>{
+    putUsuarios: async(nome,email,password, empresa_id, usuario_id, token)=>{
          //regex para validacao de email
          const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
@@ -85,22 +85,36 @@ module.exports={
              console.log("O email é inválido")
              throw new Error("O email é inválido")
          }
- 
+
+
+        const existsUser = await repository.findUserByEmail(email);
+        if(existsUser){
+            throw new Error("Email já existe");
+        }
+
          //verificando se password não é null, undefined ou ''
          if(password === null || password === undefined || password === ''){
              throw new Error("password está vazio");
          }
+
+         //criando hash com password
+         const hash = await bcrypt.hash(password,10);
+
+         password = hash;
  
          //verificando se empresa_id não é null, undefined ou ''
          if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
              throw new Error("empresa_id está vazio");
          }
 
+         const usuario = await repository.findUserByToken(token);
+         const usuarioDono = usuario.usuario_id;
+
          //enviando dados ao repository
-         await repository.putUsuarios(nome,email,password,empresa_id,usuario_id);
+         await repository.putUsuarios(nome,email,password,empresa_id,usuario_id, usuarioDono);
 
          //criando objeto de dados ja existente
-         const data = {nome,email,password,empresa_id,usuario_id};
+         const data = {nome,email,empresa_id,id:usuario_id, usuario_id:usuarioDono};
 
          return data;
     },
