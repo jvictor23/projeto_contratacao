@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require("../controllers/usuario.controller");
+const authMiddleware = require("../helpers/auth");
+
+//utilizando middleware
+router.use(authMiddleware);
 
 //rotas
 router.get("/usuarios/:empresa_id", controller.getUsuarios);
