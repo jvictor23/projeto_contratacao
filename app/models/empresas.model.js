@@ -9,7 +9,7 @@ module.exports={
         return empresas;
     },
 
-    postEmpresas: async(razao_social, cnpj, slug,email, usuario_id)=>{
+    postEmpresas: async(razao_social, cnpj, slug,email, token)=>{
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
         //verificando se razao_social não é null, undefined ou ''
@@ -51,12 +51,14 @@ module.exports={
             throw new Error("O email é inválido")
         }
 
-        //verificando se usuario_id não é null, undefined ou ''
-        if(usuario_id === null || usuario_id === undefined || usuario_id === ''){
-            throw new Error("usuario_id está vazio");
+        //verificando se token não é null, undefined ou ''
+        if(token === null || token === undefined || token === ''){
+            throw new Error("token está vazio");
         }
 
         //enviando dados ao repository para criacao de empresa
+        const usuario_id = await repository.findUserByToken(token);
+
         const empresaCriada = await repository.postEmpresas(razao_social, cnpj, slug,email, usuario_id);
 
         const id = empresaCriada.id;

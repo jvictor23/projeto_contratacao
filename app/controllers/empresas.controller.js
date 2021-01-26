@@ -20,11 +20,10 @@ module.exports={
 
     postEmpresas: async(req,res)=>{
          // Destruturando dados
-         const {razao_socail, cnpj, slug,email, usuario_id} = req.body;
+         const {razao_socail, cnpj, slug,email, token} = req.body;
         try {
             //enviando e recebendo informacoes do model
-            const empresa = model.postEmpresas(razao_socail, cnpj,slug,email, usuario_id);
-
+            const empresa = model.postEmpresas(razao_socail, cnpj,slug,email, token);
             return res.send({
                 success: true,
                 data: empresa
