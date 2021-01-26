@@ -62,7 +62,7 @@ module.exports={
             throw new Error("endereco está vazio");
         }
 
-        //verificando se endereco não é null, undefined ou ''
+        //verificando se empresa_id não é null, undefined ou ''
         if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
             throw new Error("empresa_id está vazio");
         }
@@ -72,5 +72,20 @@ module.exports={
         const data ={id,cnpj,endereco,empresa_id,usuario_id};
 
         return data;
+    },
+
+    deleteSedes: async(empresa_id, sede_id)=>{
+
+        //verificando se empresa_id não é null, undefined ou ''
+        if(empresa_id === null || empresa_id === undefined || empresa_id === ''){
+            throw new Error("empresa_id está vazio");
+        }
+
+        //verificando se sede_id não é null, undefined ou ''
+        if(sede_id === null || sede_id === undefined || sede_id === ''){
+            throw new Error("sede_id está vazio");
+        }
+
+        await repository.deleteSedes(empresa_id, sede_id);
     }
 }
